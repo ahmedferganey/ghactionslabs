@@ -13,7 +13,10 @@ jobs:
     steps:
 
       - name: Print Incident Details
-        run: echo "Incident reported"
+        run: |
+          echo "Severity: ${{ github.event.client_payload.severity }}"
+          echo "Service: ${{ github.event.client_payload.service }}"
+          echo "Message: ${{ github.event.client_payload.message }}"
 
       - name: Send Incident Email
         uses: dawidd6/action-send-mail@v18
@@ -25,18 +28,25 @@ jobs:
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
 
-          subject: "GitHub Actions Incident Report"
-
+          from: ${{ secrets.MAIL_USERNAME }}
           to: ahmed.ferganey707@gmail.com
 
-          from: ${{ secrets.MAIL_USERNAME }}
+          subject: "Incident: ${{ github.event.client_payload.service }}"
 
           body: |
-            An incident has been reported.
+            A new incident has been reported.
 
-            Repository: ${{ github.repository }}
-            Workflow: ${{ github.workflow }}
-            Event: ${{ github.event.action }}
-            Triggered By: ${{ github.actor }}
+            Severity:
+            ${{ github.event.client_payload.severity }}
 
-            Please check the GitHub Actions workflow for more information.
+            Service:
+            ${{ github.event.client_payload.service }}
+
+            Incident:
+            ${{ github.event.client_payload.message }}
+
+            Repository:
+            ${{ github.repository }}
+
+            Triggered By:
+            ${{ github.actor }}

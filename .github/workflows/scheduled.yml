@@ -1,0 +1,10 @@
+on:
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  monthly-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print message 
+        run: echo "This job runs on the first day of every month at midnight."
