@@ -4,8 +4,8 @@
     "description": "My package",
     "main": "src/app.js",
     "scripts": {
-        "test": "node src/test.sh"
+      "test": "bash src/test.sh"
     },
     "author": "Ahmed Ferganey",
     "dependencies": {}
-}
+  }
