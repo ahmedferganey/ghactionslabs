@@ -1,0 +1,42 @@
+name: Incident Report
+
+on:
+  repository_dispatch:
+    types:
+      - incident_report
+
+jobs:
+  handle-incident:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Print Incident Details
+        run: echo "Incident reported"
+
+      - name: Send Incident Email
+        uses: dawidd6/action-send-mail@v18
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+
+          subject: "GitHub Actions Incident Report"
+
+          to: ahmed.ferganey707@gmail.com
+
+          from: ${{ secrets.MAIL_USERNAME }}
+
+          body: |
+            An incident has been reported.
+
+            Repository: ${{ github.repository }}
+            Workflow: ${{ github.workflow }}
+            Event: ${{ github.event.action }}
+            Triggered By: ${{ github.actor }}
+
+            Please check the GitHub Actions workflow for more information.
