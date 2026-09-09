@@ -1,0 +1,11 @@
+{
+    "name": "my-package",
+    "version": "1.0.0",
+    "description": "My package",
+    "main": "src/app.js",
+    "scripts": {
+        "test": "node src/test.sh"
+    },
+    "author": "Ahmed Ferganey",
+    "dependencies": {}
+}
