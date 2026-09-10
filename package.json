@@ -4,8 +4,16 @@
     "description": "My package",
     "main": "src/app.js",
     "scripts": {
-      "test": "bash src/test.sh"
+      "test": "bash src/test.sh",
+      "lint": "eslint src tests",
+      "test:unit": "jest tests/unit.test.js",
+      "build": "mkdir -p dist && cp -r src/* dist/",
+      "test:integration": "jest tests/integration.test.js"      
     },
     "author": "Ahmed Ferganey",
+    "devDependencies": {
+      "eslint": "^9.0.0",
+      "jest": "^30.0.0"
+    },    
     "dependencies": {}
   }
