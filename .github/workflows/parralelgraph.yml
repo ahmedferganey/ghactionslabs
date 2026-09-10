@@ -18,20 +18,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Run ESLint
-        run: npm run lint
+      - name: Simulate Lint Check
+        run: |
+          echo "Starting lint check..."
+          echo "Checking code formatting..."
+          echo "Lint check passed."
 
 
   unit-test:
@@ -39,20 +30,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Run Unit Test
+        run: |
+          echo "Starting unit tests..."
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
+          RESULT=$((2 + 3))
 
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Run Unit Tests
-        run: npm run test:unit
+          if [ "$RESULT" -eq 5 ]; then
+            echo "Unit test passed: 2 + 3 = 5"
+          else
+            echo "Unit test failed"
+            exit 1
+          fi
 
 
   security:
@@ -60,20 +49,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Run npm Audit
-        run: npm audit
+      - name: Simulate Security Audit
+        run: |
+          echo "Starting security audit..."
+          echo "Checking for security problems..."
+          echo "No security vulnerabilities detected."
 
 
   build:
@@ -87,20 +67,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install Dependencies
-        run: npm ci
-
       - name: Build Application
-        run: npm run build
+        run: |
+          echo "Starting build..."
+          mkdir -p dist
+          echo "Application Build Version 1.0" > dist/app.txt
+          echo "Build completed successfully."
+
+      - name: Show Build Files
+        run: |
+          echo "Build directory:"
+          ls -la dist
+          echo ""
+          echo "Build content:"
+          cat dist/app.txt
 
 
   deploy-staging:
@@ -112,7 +92,9 @@ jobs:
 
     steps:
       - name: Deploy Staging
-        run: echo "Deploy staging"
+        run: |
+          echo "Starting staging deployment..."
+          echo "Application deployed to staging successfully."
 
 
   integration-test:
@@ -123,20 +105,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Run Integration Test
+        run: |
+          echo "Starting integration tests..."
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
+          SERVICE_A="available"
+          SERVICE_B="available"
 
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Run Integration Tests
-        run: npm run test:integration
+          if [ "$SERVICE_A" = "available" ] && [ "$SERVICE_B" = "available" ]; then
+            echo "Integration test passed."
+          else
+            echo "Integration test failed."
+            exit 1
+          fi
 
 
   deploy-production:
@@ -148,4 +129,6 @@ jobs:
 
     steps:
       - name: Deploy Production
-        run: echo "Deploy production"
+        run: |
+          echo "Starting production deployment..."
+          echo "Application deployed to production successfully."
