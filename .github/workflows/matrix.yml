@@ -1,0 +1,41 @@
+name: Matrix Strategy Lab
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  test:
+    name: Test Node ${{ matrix.node-version }} on ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+        node-version:
+          - 20
+          - 22
+          - 24
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Display Environment
+        run: |
+          node --version
+          echo "OS = ${{ matrix.os }}"
